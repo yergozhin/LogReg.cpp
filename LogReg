@@ -1,0 +1,48 @@
+#include "LogReg.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+bool isLoggedIn(){
+    string username, password, us, ps;
+    cout << "Enter username: "; cin >> username;
+    cout << "Enter password: "; cin >> password;
+    ifstream read("c:\\" + username + ".txt");
+    getline(read,us);
+    getline(read,ps);
+    if(us == username && ps == password){
+        return true;
+    }
+    return false;
+}
+int main(){
+    int choice;
+    cout << "To login please type: 1\nTo register please type: 2" << endl;
+    cin >> choice;
+    if(choice == 1){
+        bool status = isLoggedIn();
+        if(status == true){
+            cout << "Successfully logged in!" << endl;
+            cin.get();
+            //system("read");
+            return 1;
+        }
+        else{
+            cout << "Your username or password is incorrect, please try again" << endl;
+            cin.get();
+            //system("read");
+            return 0;
+        }
+    }
+    else{
+        string username, password;
+        cout << "Select a username: "; cin >> username;
+        cout << "Select a password: "; cin >> password;
+        ofstream file;
+        file.open("c:\\" + username + ".txt");
+        file << username << endl << password;
+        file.close();
+        main();
+    }
+}
